@@ -20,7 +20,7 @@ enablePlugins(JavaAppPackaging)
 
 libraryDependencies ++= {
   val sparkVer = "2.4.4"
-  val sparkNLP = "2.4.5"
+  val sparkNLP = "2.5.4"
   Seq(
     "org.apache.spark" %% "spark-core" % sparkVer,
     "org.apache.spark" %% "spark-sql" % sparkVer,
