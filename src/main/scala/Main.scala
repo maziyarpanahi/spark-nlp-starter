@@ -9,7 +9,6 @@ object Main {
       val spark: SparkSession = SparkSession.builder
         .appName("spark-nlp-starter")
         .master("local[*]")
-        .enableHiveSupport()
         .getOrCreate
 
       val document = new DocumentAssembler()

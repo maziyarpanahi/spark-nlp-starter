@@ -17,39 +17,34 @@ import com.typesafe.sbt.packager.archetypes.JavaAppPackaging
 enablePlugins(JavaServerAppPackaging)
 enablePlugins(JavaAppPackaging)
 
+val scalaTestVersion = "3.0.0"
+
 
 libraryDependencies ++= {
   val sparkVer = "2.4.4"
   val sparkNLP = "2.5.4"
   Seq(
-    "org.apache.spark" %% "spark-core" % sparkVer,
-    "org.apache.spark" %% "spark-sql" % sparkVer,
-    "org.apache.spark" %% "spark-streaming" % sparkVer,
-    "org.apache.spark" %% "spark-mllib" %sparkVer,
-    "org.apache.spark" %% "spark-hive" % sparkVer,
-    "org.apache.spark" %% "spark-graphx" % sparkVer,
-    "org.apache.spark" %% "spark-yarn" % sparkVer,
-    "com.johnsnowlabs.nlp" %% "spark-nlp" % sparkNLP
+    "org.apache.spark" %% "spark-core" % sparkVer % "provided",
+    "org.apache.spark" %% "spark-mllib" % sparkVer % "provided",
+    "org.scalatest" %% "scalatest" % scalaTestVersion % "test",
+    "com.johnsnowlabs.nlp" %% "spark-nlp" % sparkNLP % "provided"
   )
 }
 
+//conflictManager := ConflictManager.strict
+
 assemblyMergeStrategy in assembly := {
   case PathList("META-INF", xs @ _*) => MergeStrategy.discard
-  case x => MergeStrategy.first
+  case x if x.startsWith("NativeLibrary") => MergeStrategy.last
+  case x if x.startsWith("aws") => MergeStrategy.last
+  case _ => MergeStrategy.last
 }
 
-assemblyExcludedJars in assembly := {
-  val cp = (fullClasspath in assembly).value
-  cp filter {
-    j => {
-      j.data.getName.startsWith("spark-core") ||
-        j.data.getName.startsWith("spark-sql") ||
-        j.data.getName.startsWith("spark-hive") ||
-        j.data.getName.startsWith("spark-mllib") ||
-        j.data.getName.startsWith("spark-graphx") ||
-        j.data.getName.startsWith("spark-yarn") ||
-        j.data.getName.startsWith("spark-streaming") ||
-        j.data.getName.startsWith("hadoop")
-    }
-  }
-}
+//assemblyExcludedJars in assembly := {
+//  val cp = (fullClasspath in assembly).value
+//  cp filter {
+//    j => {
+//        j.data.getName.startsWith("spark-nlp")
+//    }
+//  }
+//}
