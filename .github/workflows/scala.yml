@@ -8,12 +8,10 @@ on:
 
 jobs:
   build:
-
-    runs-on: ${{ matrix.os }}
-      strategy:
-        matrix:
-          os: [macos-latest, ubuntu-latest, windows-2016, windows-2019]
-
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      matrix:
+        operating-system: [ubuntu-latest, macOS-latest, windows-latest]
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 1.8
