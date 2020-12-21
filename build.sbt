@@ -21,8 +21,8 @@ val scalaTestVersion = "3.0.0"
 
 
 libraryDependencies ++= {
-  val sparkVer = "2.4.6"
-  val sparkNLP = "2.6.0"
+  val sparkVer = "2.4.7"
+  val sparkNLP = "2.6.5"
   Seq(
     "org.apache.spark" %% "spark-core" % sparkVer,
     "org.apache.spark" %% "spark-mllib" % sparkVer,
