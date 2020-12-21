@@ -6,56 +6,62 @@ import com.johnsnowlabs.nlp.annotator._
 
 object Main {
   def main(args: Array[String]) {
-      val spark: SparkSession = SparkSession.builder
-        .appName("spark-nlp-starter")
-        .master("local[*]")
-        .getOrCreate
+    val spark: SparkSession = SparkSession.builder
+      .appName("spark-nlp-starter")
+      .master("local[*]")
+      .getOrCreate
 
-      val document = new DocumentAssembler()
-        .setInputCol("text")
-        .setOutputCol("document")
+    val document = new DocumentAssembler()
+      .setInputCol("text")
+      .setOutputCol("document")
 
-      val sentenceDetector = new SentenceDetector()
-        .setInputCols("document")
-        .setOutputCol("sentence")
+    val sentenceDetector = new SentenceDetector()
+      .setInputCols("document")
+      .setOutputCol("sentence")
 
-      val token = new Tokenizer()
-        .setInputCols("sentence")
-        .setOutputCol("token")
+    val token = new Tokenizer()
+      .setInputCols("sentence")
+      .setOutputCol("token")
 
-      val wordEmbeddings = WordEmbeddingsModel.pretrained()
-        .setInputCols("sentence", "token")
-        .setOutputCol("word_embeddings")
+    val posTagger = PerceptronModel.pretrained()
+      .setInputCols("sentence", "token")
+      .setOutputCol("pos")
 
-      val ner = NerDLModel.pretrained("ner_dl","en")
-        .setInputCols("token", "sentence","word_embeddings")
-        .setOutputCol("ner")
+    val wordEmbeddings = WordEmbeddingsModel.pretrained()
+      .setInputCols("sentence", "token")
+      .setOutputCol("word_embeddings")
 
-      val nerConverter = new NerConverter()
-        .setInputCols("sentence", "token", "ner")
-        .setOutputCol("ner_converter")
+    val ner = NerDLModel.pretrained("ner_dl","en")
+      .setInputCols("token", "sentence","word_embeddings")
+      .setOutputCol("ner")
 
-      val finisher = new Finisher()
-        .setInputCols("ner", "ner_converter")
-        .setCleanAnnotations(false)
+    val nerConverter = new NerConverter()
+      .setInputCols("sentence", "token", "ner")
+      .setOutputCol("ner_converter")
 
-      val pipeline = new Pipeline().setStages(
-        Array(
-          document,
-          sentenceDetector,
-          token,
-          wordEmbeddings,
-          ner,
-          nerConverter,
-          finisher))
+    val finisher = new Finisher()
+      .setInputCols("ner", "ner_converter")
+      .setCleanAnnotations(false)
 
-      val testData = spark.createDataFrame(Seq(
-        (1, "Google has announced the release of a beta version of the popular TensorFlow machine learning library"),
-        (2, "The Paris metro will soon enter the 21st century, ditching single-use paper tickets for rechargeable electronic cards.")
-      )).toDF("id", "text")
+    val pipeline = new Pipeline().setStages(
+      Array(
+        document,
+        sentenceDetector,
+        token,
+        posTagger,
+        wordEmbeddings,
+        ner,
+        nerConverter,
+        finisher))
 
-      val predicion = pipeline.fit(testData).transform(testData)
-      predicion.select("ner_converter.result").show(false)
+    val testData = spark.createDataFrame(Seq(
+      (1, "Google has announced the release of a beta version of the popular TensorFlow machine learning library"),
+      (2, "The Paris metro will soon enter the 21st century, ditching single-use paper tickets for rechargeable electronic cards.")
+    )).toDF("id", "text")
 
-    }
+    val predicion = pipeline.fit(testData).transform(testData)
+    predicion.select("ner_converter.result").show(false)
+    predicion.select("pos.result").show(false)
+
+  }
 }
