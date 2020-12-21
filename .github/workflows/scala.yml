@@ -22,7 +22,6 @@ jobs:
         if: runner.os == 'macOS'
         run: |
           mkdir homebrew && curl -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip 1 -C homebrew
-          brew update
           brew install sbt
           brew link --overwrite sbt
       - name: Run tests
