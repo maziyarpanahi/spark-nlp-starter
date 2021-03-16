@@ -8,10 +8,7 @@ on:
 
 jobs:
   test:
-    runs-on: ${{ matrix.operating-system }}
-    strategy:
-      matrix:
-        operating-system: [ubuntu-latest, macOS-latest]
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 1.8
@@ -19,10 +16,7 @@ jobs:
         with:
           java-version: 1.8
       - name: install brew on mac
-        if: runner.os == 'macOS'
         run: |
-          mkdir homebrew && curl -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip 1 -C homebrew
           brew install sbt
-          brew link --overwrite sbt
       - name: Run tests
         run: sbt test
