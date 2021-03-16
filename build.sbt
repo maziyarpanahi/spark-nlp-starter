@@ -1,8 +1,8 @@
 name := "spark-nlp-starter"
 
-version := "0.1"
+version := "1.0"
 
-scalaVersion := "2.11.12"
+scalaVersion := "2.12.10"
 
 javacOptions ++= Seq("-source", "1.8", "-target", "1.8")
 
@@ -21,8 +21,8 @@ val scalaTestVersion = "3.0.0"
 
 
 libraryDependencies ++= {
-  val sparkVer = "2.4.7"
-  val sparkNLP = "2.6.5"
+  val sparkVer = "3.1.1"
+  val sparkNLP = "3.0.0-rc8"
   Seq(
     "org.apache.spark" %% "spark-core" % sparkVer,
     "org.apache.spark" %% "spark-mllib" % sparkVer,
