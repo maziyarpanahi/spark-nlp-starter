@@ -11,6 +11,8 @@ object Main {
       .master("local[*]")
       .getOrCreate
 
+    spark.sparkContext.setLogLevel("ERROR")
+
     val document = new DocumentAssembler()
       .setInputCol("text")
       .setOutputCol("document")
