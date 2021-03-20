@@ -1,6 +1,6 @@
 name := "spark-nlp-starter"
 
-version := "1.0"
+version := "1.1"
 
 scalaVersion := "2.12.10"
 
@@ -22,16 +22,17 @@ val scalaTestVersion = "3.0.0"
 
 libraryDependencies ++= {
   val sparkVer = "3.1.1"
-  val sparkNLP = "3.0.0-rc8"
+  val sparkNLP = "3.0.0-rc11"
   Seq(
-    "org.apache.spark" %% "spark-core" % sparkVer,
-    "org.apache.spark" %% "spark-mllib" % sparkVer,
+    "org.apache.spark" %% "spark-core" % sparkVer % Provided,
+    "org.apache.spark" %% "spark-mllib" % sparkVer % Provided,
     "org.scalatest" %% "scalatest" % scalaTestVersion % "test",
     "com.johnsnowlabs.nlp" %% "spark-nlp" % sparkNLP
   )
 }
 
-//conflictManager := ConflictManager.strict
+/** Disables tests in assembly */
+test in assembly := {}
 
 assemblyMergeStrategy in assembly := {
   case PathList("META-INF", xs @ _*) => MergeStrategy.discard
