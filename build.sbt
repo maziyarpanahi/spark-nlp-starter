@@ -1,3 +1,10 @@
+import com.typesafe.sbt.packager.archetypes.JavaAppPackaging
+
+enablePlugins(JavaServerAppPackaging)
+enablePlugins(JavaAppPackaging)
+
+val scalaTestVersion = "3.0.0"
+
 name := "spark-nlp-starter"
 
 version := "1.1"
@@ -12,17 +19,9 @@ developers in ThisBuild:= List(
   Developer(id="maziyarpanahi", name="Maziyar Panahi", email="maziyar.panahi@iscpif.fr", url=url("https://github.com/maziyarpanahi")),
 )
 
-import com.typesafe.sbt.packager.archetypes.JavaAppPackaging
-
-enablePlugins(JavaServerAppPackaging)
-enablePlugins(JavaAppPackaging)
-
-val scalaTestVersion = "3.0.0"
-
-
 libraryDependencies ++= {
-  val sparkVer = "3.1.1"
-  val sparkNLP = "3.0.0-rc11"
+  val sparkVer = "3.0.2"
+  val sparkNLP = "3.0.1"
   Seq(
     "org.apache.spark" %% "spark-core" % sparkVer % Provided,
     "org.apache.spark" %% "spark-mllib" % sparkVer % Provided,
@@ -41,6 +40,10 @@ assemblyMergeStrategy in assembly := {
   case _ => MergeStrategy.last
 }
 
+/*
+* If you wish to make a Uber JAR (Fat JAR) without Spark NLP
+* because your environment already has Spark NLP included same as Apache Spark
+**/
 //assemblyExcludedJars in assembly := {
 //  val cp = (fullClasspath in assembly).value
 //  cp filter {
