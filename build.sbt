@@ -15,12 +15,12 @@ javacOptions ++= Seq("-source", "1.8", "-target", "1.8")
 
 licenses := Seq("Apache-2.0" -> url("https://opensource.org/licenses/Apache-2.0"))
 
-developers in ThisBuild:= List(
-  Developer(id="maziyarpanahi", name="Maziyar Panahi", email="maziyar.panahi@iscpif.fr", url=url("https://github.com/maziyarpanahi")),
+developers in ThisBuild := List(
+  Developer(id = "maziyarpanahi", name = "Maziyar Panahi", email = "maziyar.panahi@iscpif.fr", url = url("https://github.com/maziyarpanahi")),
 )
 
 libraryDependencies ++= {
-  val sparkVer = "3.0.3"
+  val sparkVer = "3.1.2"
   val sparkNLP = "3.1.3"
   Seq(
     "org.apache.spark" %% "spark-core" % sparkVer % Provided,
@@ -34,7 +34,7 @@ libraryDependencies ++= {
 test in assembly := {}
 
 assemblyMergeStrategy in assembly := {
-  case PathList("META-INF", xs @ _*) => MergeStrategy.discard
+  case PathList("META-INF", xs@_*) => MergeStrategy.discard
   case x if x.startsWith("NativeLibrary") => MergeStrategy.last
   case x if x.startsWith("aws") => MergeStrategy.last
   case _ => MergeStrategy.last
