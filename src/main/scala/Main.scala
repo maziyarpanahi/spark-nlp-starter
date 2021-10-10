@@ -10,7 +10,7 @@ object Main {
     .master("local[*]")
     .getOrCreate
 
-  def main(args: Array[String]) {
+  def main(args: Array[String]): Unit = {
 
     spark.sparkContext.setLogLevel("ERROR")
 
@@ -68,7 +68,7 @@ object Main {
 
   }
 
-  def pretrainedPipeline(args: Array[String]) {
+  def pretrainedPipeline(args: Array[String]): Unit = {
 
     spark.sparkContext.setLogLevel("ERROR")
 
@@ -80,6 +80,10 @@ object Main {
     val pipeline = new PretrainedPipeline("explain_document_dl", lang = "en")
     pipeline.annotate("Google has announced the release of a beta version of the popular TensorFlow machine learning library")
     pipeline.transform(testData).select("entities").show(false)
+
+    val pipelineML = new PretrainedPipeline("explain_document_ml", lang = "en")
+    pipelineML.annotate("Google has announced the release of a beta version of the popular TensorFlow machine learning library")
+    pipelineML.transform(testData).select("pos").show(false)
 
   }
 }

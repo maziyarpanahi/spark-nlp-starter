@@ -21,7 +21,7 @@ developers in ThisBuild := List(
 
 libraryDependencies ++= {
   val sparkVer = "3.1.2"
-  val sparkNLP = "3.1.3"
+  val sparkNLP = "3.3.0"
   Seq(
     "org.apache.spark" %% "spark-core" % sparkVer % Provided,
     "org.apache.spark" %% "spark-mllib" % sparkVer % Provided,
