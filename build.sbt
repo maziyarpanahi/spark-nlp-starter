@@ -3,11 +3,11 @@ import com.typesafe.sbt.packager.archetypes.JavaAppPackaging
 enablePlugins(JavaServerAppPackaging)
 enablePlugins(JavaAppPackaging)
 
-val scalaTestVersion = "3.0.0"
+val scalaTestVersion = "3.2.9"
 
 name := "spark-nlp-starter"
 
-version := "1.1"
+version := "3.3.4"
 
 scalaVersion := "2.12.10"
 
@@ -21,7 +21,7 @@ developers in ThisBuild := List(
 
 libraryDependencies ++= {
   val sparkVer = "3.1.2"
-  val sparkNLP = "3.3.1"
+  val sparkNLP = "3.3.4"
   Seq(
     "org.apache.spark" %% "spark-core" % sparkVer % Provided,
     "org.apache.spark" %% "spark-mllib" % sparkVer % Provided,
