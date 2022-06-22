@@ -1,6 +1,6 @@
 import org.scalatest.flatspec.AnyFlatSpec
 
-class PipelineTest extends AnyFlatSpec{
+class PipelineTest extends AnyFlatSpec {
   "Spark NLP Starter" should "correctly download and annotate" in {
     Main.main(Array.empty)
   }
