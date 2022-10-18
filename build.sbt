@@ -7,7 +7,7 @@ val scalaTestVersion = "3.2.9"
 
 name := "spark-nlp-starter"
 
-version := "4.0.2"
+version := "4.2.1"
 
 scalaVersion := "2.12.15"
 
@@ -23,7 +23,7 @@ developers in ThisBuild := List(
     url = url("https://github.com/maziyarpanahi")))
 
 val sparkVer = "3.3.0"
-val sparkNLP = "4.0.2"
+val sparkNLP = "4.2.1"
 
 libraryDependencies ++= {
   Seq(
