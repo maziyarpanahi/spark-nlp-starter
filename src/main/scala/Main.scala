@@ -95,4 +95,18 @@ object Main {
     pipelineML.transform(testData).select("pos").show(false)
 
   }
+
+  def pretrainedPipelineLD(args: Array[String]): Unit = {
+
+    spark.sparkContext.setLogLevel("ERROR")
+
+    val testData =
+      Array(
+        "A természetes nyelvfeldolgozás története általában az 1950-es években kezdődött, bár a korábbi időszakokból származó munkák is megtalálhatók. 1950-ben Alan Turing közzétett egy cikket, melynek címe: „Számítástechnika és intelligenciagépek”, és amely intelligenciakritériumként javasolta a Turing-tesztet.",
+        "Geoffrey Everest Hinton é um psicólogo cognitivo britânico canadense e cientista da computação, mais conhecido por seu trabalho em redes neurais artificiais. Desde 2013, ele trabalha para o Google e a Universidade de Toronto. Em 2017, foi co-fundador e tornou-se Conselheiro Científico Chefe do Vector Institute of Toronto.")
+
+    val pipeline = new PretrainedPipeline("detect_language_43", lang = "xx")
+    println(pipeline.annotate(testData).mkString("Array(", ", ", ")"))
+
+  }
 }

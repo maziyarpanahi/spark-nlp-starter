@@ -7,5 +7,6 @@ class PipelineTest extends AnyFlatSpec {
 
   "Spark NLP Starter" should "correctly work with pretrained Pipeline" in {
     Main.pretrainedPipeline(Array.empty)
+    Main.pretrainedPipelineLD(Array.empty)
   }
 }

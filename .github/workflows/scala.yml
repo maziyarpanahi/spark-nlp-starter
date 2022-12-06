@@ -9,6 +9,8 @@ on:
 jobs:
   test:
     runs-on: macos-latest
+    env:
+      TF_CPP_MIN_LOG_LEVEL: 3
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 1.8
