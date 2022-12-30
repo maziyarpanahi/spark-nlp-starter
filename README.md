@@ -8,6 +8,10 @@ This is just a simple demo as how to use Spark NLP in a SBT project in Scala. Us
 After your executed `sbt assembly` to get a Fat JAR (without Apache Spark since your environment has Apache Spark already), you can use `spark-submit` like this:
 
 ```shell
+sbt assembly
+```
+
+```shell
 ~/spark-3.1.1-bin-hadoop3.2/bin/spark-submit \
 --class "Main" \
 target/scala-2.12/spark-nlp-starter-assembly-1.1.jar
