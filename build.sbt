@@ -3,11 +3,11 @@ import com.typesafe.sbt.packager.archetypes.JavaAppPackaging
 enablePlugins(JavaServerAppPackaging)
 enablePlugins(JavaAppPackaging)
 
-val scalaTestVersion = "3.2.9"
+val scalaTestVersion = "3.2.14"
 
 name := "spark-nlp-starter"
 
-version := "4.2.4"
+version := "4.2.6"
 
 scalaVersion := "2.12.15"
 
@@ -15,7 +15,7 @@ javacOptions ++= Seq("-source", "1.8", "-target", "1.8")
 
 licenses := Seq("Apache-2.0" -> url("https://opensource.org/licenses/Apache-2.0"))
 
-developers in ThisBuild := List(
+ThisBuild / developers := List(
   Developer(
     id = "maziyarpanahi",
     name = "Maziyar Panahi",
@@ -23,7 +23,7 @@ developers in ThisBuild := List(
     url = url("https://github.com/maziyarpanahi")))
 
 val sparkVer = "3.3.1"
-val sparkNLP = "4.2.4"
+val sparkNLP = "4.2.6"
 
 libraryDependencies ++= {
   Seq(
@@ -34,9 +34,9 @@ libraryDependencies ++= {
 }
 
 /** Disables tests in assembly */
-test in assembly := {}
+assembly / test := {}
 
-assemblyMergeStrategy in assembly := {
+assembly / assemblyMergeStrategy := {
   case PathList("META-INF", xs @ _*) => MergeStrategy.discard
   case x if x.startsWith("NativeLibrary") => MergeStrategy.last
   case x if x.startsWith("aws") => MergeStrategy.last
