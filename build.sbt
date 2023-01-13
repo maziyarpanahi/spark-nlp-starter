@@ -23,7 +23,7 @@ ThisBuild / developers := List(
     url = url("https://github.com/maziyarpanahi")))
 
 val sparkVer = "3.3.1"
-val sparkNLP = version
+val sparkNLP = "4.2.7"
 
 libraryDependencies ++= {
   Seq(
