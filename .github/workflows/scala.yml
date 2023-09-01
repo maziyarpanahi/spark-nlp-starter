@@ -8,7 +8,7 @@ on:
 
 jobs:
   test:
-    runs-on: macos-latest
+    runs-on: ubuntu-22.04
     env:
       TF_CPP_MIN_LOG_LEVEL: 3
       JAVA_OPTS: "-Xmx4096m -XX:+UseG1GC"
@@ -19,8 +19,8 @@ jobs:
           distribution: 'adopt'
           java-version: '8'
           cache: 'sbt'
-      - name: install brew on mac
-        run: |
-          brew install sbt
+#      - name: install brew on mac
+#        run: |
+#          brew install sbt
       - name: Run tests
         run: sbt -mem 4096 test
