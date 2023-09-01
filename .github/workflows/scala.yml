@@ -8,7 +8,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-22.04
+    runs-on: macos-latest
     env:
       TF_CPP_MIN_LOG_LEVEL: 3
     steps:
@@ -17,8 +17,8 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
-#      - name: install brew on mac
-#        run: |
-#          brew install sbt
+      - name: install brew on mac
+        run: |
+          brew install sbt
       - name: Run tests
         run: sbt test

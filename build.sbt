@@ -3,7 +3,7 @@ import com.typesafe.sbt.packager.archetypes.JavaAppPackaging
 enablePlugins(JavaServerAppPackaging)
 enablePlugins(JavaAppPackaging)
 
-val scalaTestVersion = "3.2.14"
+val scalaTestVersion = "3.2.15"
 
 name := "spark-nlp-starter"
 
@@ -22,7 +22,9 @@ ThisBuild / developers := List(
     email = "maziyar.panahi@iscpif.fr",
     url = url("https://github.com/maziyarpanahi")))
 
-val sparkVer = "3.4.1"
+// Spark NLP 5.1.0 was compiled with Scala 2.12.15 and Spark 3.3.1
+// Do not change these versions unless you know what you are doing
+val sparkVer = "3.3.1"
 val sparkNLP = "5.1.0"
 
 libraryDependencies ++= {
