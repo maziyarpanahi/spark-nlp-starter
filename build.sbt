@@ -7,7 +7,7 @@ val scalaTestVersion = "3.2.14"
 
 name := "spark-nlp-starter"
 
-version := "4.3.0"
+version := "5.1.0"
 
 scalaVersion := "2.12.15"
 
@@ -22,22 +22,22 @@ ThisBuild / developers := List(
     email = "maziyar.panahi@iscpif.fr",
     url = url("https://github.com/maziyarpanahi")))
 
-val sparkVer = "3.3.1"
-val sparkNLP = "4.3.0"
+val sparkVer = "3.4.1"
+val sparkNLP = "5.1.0"
 
 libraryDependencies ++= {
   Seq(
     "org.apache.spark" %% "spark-core" % sparkVer % Provided,
     "org.apache.spark" %% "spark-mllib" % sparkVer % Provided,
     "org.scalatest" %% "scalatest" % scalaTestVersion % "test",
-    "com.johnsnowlabs.nlp" %% "spark-nlp" % sparkNLP)
+    "com.johnsnowlabs.nlp" %% "spark-nlp-silicon" % sparkNLP)
 }
 
 /** Disables tests in assembly */
 assembly / test := {}
 
 assembly / assemblyMergeStrategy := {
-  case PathList("META-INF", xs @ _*) => MergeStrategy.discard
+  case PathList("META-INF", xs*) => MergeStrategy.discard
   case x if x.startsWith("NativeLibrary") => MergeStrategy.last
   case x if x.startsWith("aws") => MergeStrategy.last
   case _ => MergeStrategy.last
