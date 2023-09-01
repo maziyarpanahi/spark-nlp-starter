@@ -37,7 +37,7 @@ libraryDependencies ++= {
 assembly / test := {}
 
 assembly / assemblyMergeStrategy := {
-  case PathList("META-INF", xs*) => MergeStrategy.discard
+  case PathList("META-INF", xs @ _*) => MergeStrategy.discard
   case x if x.startsWith("NativeLibrary") => MergeStrategy.last
   case x if x.startsWith("aws") => MergeStrategy.last
   case _ => MergeStrategy.last
