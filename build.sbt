@@ -7,7 +7,7 @@ val scalaTestVersion = "3.2.15"
 
 name := "spark-nlp-starter"
 
-version := "5.1.0"
+version := "5.3.1"
 
 scalaVersion := "2.12.15"
 
@@ -25,7 +25,7 @@ ThisBuild / developers := List(
 // Spark NLP 5.1.0 was compiled with Scala 2.12.15 and Spark 3.3.1
 // Do not change these versions unless you know what you are doing
 val sparkVer = "3.4.0"
-val sparkNLP = "5.1.0"
+val sparkNLP = "5.3.1"
 
 libraryDependencies ++= {
   Seq(
