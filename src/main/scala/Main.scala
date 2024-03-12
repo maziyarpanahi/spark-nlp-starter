@@ -76,8 +76,7 @@ object Main {
     val mpnet_lightpipeline = new LightPipeline(pipeline.fit(testData))
     mpnet_lightpipeline.annotate(
       "Google has announced the release of a beta version of the popular TensorFlow machine learning library")
-    mpnet_lightpipeline.transform(testData).count()
-    mpnet_lightpipeline.transform(testData).select("entities").show(false)
+    mpnet_lightpipeline.transform(testData).select("mpnet").count().show(false)
 
   }
 
