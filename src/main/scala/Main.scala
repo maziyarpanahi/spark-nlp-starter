@@ -1,5 +1,6 @@
 import com.johnsnowlabs.nlp.annotator._
 import com.johnsnowlabs.nlp.base._
+import com.johnsnowlabs.nlp.embeddings.MPNetEmbeddings
 import com.johnsnowlabs.nlp.pretrained.PretrainedPipeline
 import org.apache.spark.ml.Pipeline
 import org.apache.spark.sql.SparkSession
@@ -36,29 +37,8 @@ object Main {
       .setInputCols("sentence", "token")
       .setOutputCol("word_embeddings")
 
-    val ner = NerDLModel
-      .pretrained("ner_dl", "en")
-      .setInputCols("token", "sentence", "word_embeddings")
-      .setOutputCol("ner")
-
-    val nerConverter = new NerConverter()
-      .setInputCols("sentence", "token", "ner")
-      .setOutputCol("ner_converter")
-
-    val finisher = new Finisher()
-      .setInputCols("ner", "ner_converter")
-      .setCleanAnnotations(false)
-
     val pipeline = new Pipeline().setStages(
-      Array(
-        document,
-        sentenceDetector,
-        token,
-        posTagger,
-        wordEmbeddings,
-        ner,
-        nerConverter,
-        finisher))
+      Array(document, sentenceDetector, token, posTagger, wordEmbeddings))
 
     val testData = spark
       .createDataFrame(
@@ -67,9 +47,8 @@ object Main {
           (2, "The Paris metro will soon enter the 21st century, ditching single-use paper tickets for rechargeable electronic cards.")))
       .toDF("id", "text")
 
-    val predicion = pipeline.fit(testData).transform(testData)
-    predicion.select("ner_converter.result").show(false)
-    predicion.select("pos.result").show(false)
+    val prediction = pipeline.fit(testData).transform(testData)
+    prediction.select("pos.result").show(false)
 
   }
 
@@ -84,15 +63,21 @@ object Main {
           (2, "The Paris metro will soon enter the 21st century, ditching single-use paper tickets for rechargeable electronic cards.")))
       .toDF("id", "text")
 
-    val pipeline = new PretrainedPipeline("explain_document_dl", lang = "en")
-    pipeline.annotate(
-      "Google has announced the release of a beta version of the popular TensorFlow machine learning library")
-    pipeline.transform(testData).select("entities").show(false)
+    val document = new DocumentAssembler()
+      .setInputCol("text")
+      .setOutputCol("document")
 
-    val pipelineML = new PretrainedPipeline("explain_document_ml", lang = "en")
-    pipelineML.annotate(
+    val embeddings = MPNetEmbeddings
+      .pretrained()
+      .setInputCols(Array("document"))
+      .setOutputCol("mpnet")
+
+    val pipeline = new Pipeline().setStages(Array(document, embeddings))
+    val mpnet_lightpipeline = new LightPipeline(pipeline.fit(testData))
+    mpnet_lightpipeline.annotate(
       "Google has announced the release of a beta version of the popular TensorFlow machine learning library")
-    pipelineML.transform(testData).select("pos").show(false)
+    mpnet_lightpipeline.transform(testData).count()
+    mpnet_lightpipeline.transform(testData).select("entities").show(false)
 
   }
 
